@@ -1,10 +1,25 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
-@app.route("/")
+transactions = []
+
+@app.route("/", methods=["GET", "POST"])
 def home():
-    return render_template("index.html")
+    if request.method == "POST":
+        description = request.form["description"]
+        amount = request.form["amount"]
+        ttype = request.form["type"]
+
+        transactions.append({
+            "description": description,
+            "amount": amount,
+            "type": ttype
+        })
+
+        return redirect("/")
+
+    return render_template("index.html", transactions=transactions)
 
 if __name__ == "__main__":
     app.run(debug=True)
