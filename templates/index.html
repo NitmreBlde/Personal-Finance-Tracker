@@ -1,42 +1,129 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Personal Finance Tracker</title>
+
+<title>Finance Tracker</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
 
-<h1>Personal Finance Tracker</h1>
+<div class="container">
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<h2>💰 Tracker</h2>
+
+<ul>
+
+<li class="active">Dashboard</li>
+<li>Transactions</li>
+<li>Analytics</li>
+<li>Budgets</li>
+<li>Settings</li>
+
+</ul>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<h1>Dashboard</h1>
+
+<!-- CARDS -->
+
+<div class="cards">
+
+<div class="card balance">
+<h3>Balance</h3>
+<p>₹{{ balance }}</p>
+</div>
+
+<div class="card income">
+<h3>Income</h3>
+<p>₹{{ income }}</p>
+</div>
+
+<div class="card expense">
+<h3>Expense</h3>
+<p>₹{{ expense }}</p>
+</div>
+
+<div class="card savings">
+<h3>Savings</h3>
+<p>₹{{ balance }}</p>
+</div>
+
+</div>
+
+<!-- CHART -->
+
+<div class="chart-container">
+
+<h2>Expense Analytics</h2>
+
+<canvas id="expenseChart"></canvas>
+
+</div>
+
+<!-- ADD TRANSACTION -->
 
 <h2>Add Transaction</h2>
 
-<form method="POST">
+<form method="POST" class="form">
 
 <input type="text" name="description" placeholder="Description" required>
 
 <input type="number" name="amount" placeholder="Amount" required>
 
 <select name="type">
+
 <option value="Income">Income</option>
 <option value="Expense">Expense</option>
+
 </select>
 
 <button type="submit">Add</button>
 
 </form>
 
-<h2>Transactions</h2>
+<!-- TRANSACTIONS -->
 
-<ul>
+<h2>Recent Transactions</h2>
+
+<table>
+
+<tr>
+<th>Description</th>
+<th>Amount</th>
+<th>Type</th>
+</tr>
+
 {% for t in transactions %}
 
-<li>
-{{ t.description }} - ₹{{ t.amount }} ({{ t.type }})
-</li>
+<tr>
+<td>{{ t.description }}</td>
+<td>₹{{ t.amount }}</td>
+<td>{{ t.type }}</td>
+</tr>
 
 {% endfor %}
-</ul>
+
+</table>
+
+</div>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 </html>
