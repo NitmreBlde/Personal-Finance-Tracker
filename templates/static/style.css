@@ -1,20 +1,21 @@
 body{
-font-family: 'Segoe UI', sans-serif;
+font-family:Segoe UI, sans-serif;
 margin:0;
-background:#F8F9FD;
+background:#f4f6f9;
 }
 
 .container{
 display:flex;
+min-height:100vh;
 }
 
 /* SIDEBAR */
 
 .sidebar{
-width:220px;
-background:#F3F4FF;
-height:100vh;
-padding:20px;
+width:230px;
+background:#2c3e50;
+color:white;
+padding:25px;
 }
 
 .sidebar h2{
@@ -31,18 +32,23 @@ padding:12px;
 border-radius:8px;
 margin-bottom:10px;
 cursor:pointer;
+transition:0.2s;
 }
 
-.sidebar li.active,
 .sidebar li:hover{
-background:#E0E3FF;
+background:#34495e;
+transform:translateX(4px);
+}
+
+.sidebar .active{
+background:#1abc9c;
 }
 
 /* MAIN */
 
 .main{
 flex:1;
-padding:40px;
+padding:35px;
 }
 
 /* CARDS */
@@ -55,39 +61,70 @@ margin-bottom:30px;
 
 .card{
 flex:1;
+background:white;
 padding:20px;
-border-radius:14px;
-color:white;
-box-shadow:0 10px 20px rgba(0,0,0,0.08);
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
 }
 
-.balance{background:#7C8CF8;}
-.income{background:#6ED6A0;}
-.expense{background:#FF8A8A;}
-.savings{background:#BFA6FF;}
+.card h3{
+margin:0;
+font-size:17px;
+}
+
+.card p{
+font-size:22px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.balance{border-left:5px solid #3498db;}
+.income{border-left:5px solid #2ecc71;}
+.expense{border-left:5px solid #e74c3c;}
+.savings{border-left:5px solid #9b59b6;}
+
+/* CHART */
+
+.chart-container{
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+margin-bottom:30px;
+}
+
+.chart-box{
+width:400px;
+height:260px;
+margin:auto;
+}
 
 /* FORM */
 
 .form{
 display:flex;
 gap:10px;
-margin-bottom:30px;
+margin-bottom:25px;
 }
 
 .form input,
 .form select{
 padding:10px;
-border-radius:6px;
-border:1px solid #ddd;
+border-radius:8px;
+border:1px solid #ccc;
 }
 
-button{
-background:#7C8CF8;
+.form button{
+background:#2ecc71;
 color:white;
 border:none;
 padding:10px 15px;
-border-radius:6px;
+border-radius:8px;
 cursor:pointer;
+}
+
+.form button:hover{
+background:#27ae60;
 }
 
 /* TABLE */
@@ -98,20 +135,38 @@ border-collapse:collapse;
 background:white;
 border-radius:10px;
 overflow:hidden;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
 }
 
 th,td{
 padding:12px;
+border-bottom:1px solid #eee;
 text-align:left;
 }
 
-tr:nth-child(even){
-background:#f5f6ff;
+th{
+background:#f5f6fa;
 }
 
-.chart-container{
-background:white;
-padding:20px;
-border-radius:10px;
-margin-bottom:30px;
+.income-text{
+color:#2ecc71;
+font-weight:bold;
+}
+
+.expense-text{
+color:#e74c3c;
+font-weight:bold;
+}
+
+.delete-btn{
+background:#e74c3c;
+color:white;
+padding:5px 10px;
+border-radius:6px;
+text-decoration:none;
+font-size:12px;
+}
+
+.delete-btn:hover{
+background:#c0392b;
 }
