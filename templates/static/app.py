@@ -1,64 +1,52 @@
-from flask import Flask, render_template, request, redirect, jsonify
-from datetime import datetime
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
 transactions = []
 
-def format_currency(amount):
-    return f"{amount:,.0f}"
-
-@app.route("/", methods=["GET","POST"])
+@app.route("/")
 def home():
+    return render_template("index.html")
 
-    if request.method == "POST":
 
-        description = request.form["description"]
-        amount = float(request.form["amount"])
-        ttype = request.form["type"]
+@app.route("/add_transaction", methods=["POST"])
+def add_transaction():
 
-        transactions.append({
-            "id": len(transactions)+1,
-            "description": description,
-            "amount": amount,
-            "type": ttype,
-            "date": datetime.now().strftime("%d %b %Y")
-        })
+    data = request.json
 
-        return redirect("/")
+    transactions.append(data)
 
-    income = sum(t["amount"] for t in transactions if t["type"]=="Income")
-    expense = sum(t["amount"] for t in transactions if t["type"]=="Expense")
+    return jsonify({"message":"Transaction added"})
+
+
+@app.route("/get_transactions")
+def get_transactions():
+    return jsonify(transactions)
+
+
+@app.route("/get_summary")
+def get_summary():
+
+    income = 0
+    expense = 0
+
+    for t in transactions:
+
+        amount = int(t["amount"])
+
+        if t["type"] == "Income":
+            income += amount
+        else:
+            expense += amount
+
     balance = income - expense
-
-    sorted_transactions = sorted(transactions, key=lambda x:x["id"], reverse=True)
-
-    return render_template(
-        "index.html",
-        transactions=sorted_transactions,
-        income=format_currency(income),
-        expense=format_currency(expense),
-        balance=format_currency(balance)
-    )
-
-@app.route("/delete/<int:tid>")
-def delete_transaction(tid):
-
-    global transactions
-    transactions = [t for t in transactions if t["id"]!=tid]
-
-    return redirect("/")
-
-@app.route("/chart-data")
-def chart_data():
-
-    income = sum(t["amount"] for t in transactions if t["type"]=="Income")
-    expense = sum(t["amount"] for t in transactions if t["type"]=="Expense")
 
     return jsonify({
         "income": income,
-        "expense": expense
+        "expense": expense,
+        "balance": balance
     })
+
 
 if __name__ == "__main__":
     app.run(debug=True)
